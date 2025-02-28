@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { ColumnSchema } from "@/app/(home)/schema";
 
-// Define the raw log format type
 export interface RawLog {
   ClientAddr: string;
   ClientHost: string;
@@ -34,6 +33,8 @@ export interface RawLog {
   level: string;
   msg: string;
   time: string;
+  // Allow for any additional properties with string keys and any values
+  [key: string]: any;
 }
 
 /**
@@ -52,6 +53,31 @@ function determineLevel(status: number): "success" | "warning" | "error" {
 }
 
 /**
+ * Extracts headers from raw log object
+ * Headers are prefixed with 'request_' in the log
+ * @param rawLog The raw log object
+ * @returns Record of header names and values
+ */
+function extractHeaders(rawLog: RawLog): Record<string, string> {
+  const headers: Record<string, string> = {
+    protocol: rawLog.RequestProtocol,
+    scheme: rawLog.RequestScheme,
+  };
+
+  // Extract all properties that start with 'request_'
+  Object.keys(rawLog).forEach((key) => {
+    if (key.startsWith("request_")) {
+      // Remove the 'request_' prefix and convert to standard header format
+      // e.g., 'request_User-Agent' becomes 'User-Agent'
+      const headerName = key.substring(8); // 'request_'.length === 8
+      headers[headerName] = rawLog[key];
+    }
+  });
+
+  return headers;
+}
+
+/**
  * Parses a raw log into the ColumnSchema format
  * @param logString JSON string of the raw log
  * @returns Parsed log in ColumnSchema format
@@ -63,11 +89,8 @@ export function parseLog(logString: string): ColumnSchema {
   // Determine the level based on status code
   const level = determineLevel(rawLog.DownstreamStatus);
 
-  // Create headers object (simplified)
-  const headers: Record<string, string> = {
-    protocol: rawLog.RequestProtocol,
-    scheme: rawLog.RequestScheme,
-  };
+  // Extract headers from the raw log
+  const headers = extractHeaders(rawLog);
 
   // Convert the raw log to ColumnSchema format
   const parsedLog: ColumnSchema = {
@@ -86,11 +109,6 @@ export function parseLog(logString: string): ColumnSchema {
   return parsedLog;
 }
 
-/**
- * Parses multiple raw logs into the ColumnSchema format
- * @param logStrings Array of JSON strings of raw logs
- * @returns Array of parsed logs in ColumnSchema format
- */
 export function parseLogs(logStrings: string[]): ColumnSchema[] {
   return logStrings.map(parseLog);
 }
@@ -99,7 +117,6 @@ export async function readLogFile(filePath: string): Promise<string[]> {
   const fs = await import("fs/promises");
 
   try {
-    // Read file contents
     const fileContent = await fs.readFile(filePath, "utf-8");
 
     // Split into lines and filter out empty lines
@@ -120,15 +137,12 @@ let cachedLogs: ColumnSchema[] | null = null;
 export async function getLogsFromTraefikAccessLog(
   filePath: string
 ): Promise<ColumnSchema[]> {
-  // Return cached logs if available
   if (cachedLogs) {
-    console.log("Using cached logs...");
     return cachedLogs;
   }
 
-  console.log("Reading log file...");
-  // Read and parse logs if not cached
   const logLines = await readLogFile(filePath);
   cachedLogs = parseLogs(logLines);
+
   return cachedLogs;
 }

@@ -46,15 +46,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## For Coolify
 
-To use this project with Coolify, you have to update your traefik proxy configuration to add access logs :
+To use this project with Coolify, you have to follow these steps:
+
+1. Update your traefik proxy configuration to add access logs :
 
 ```
       - '--accesslog.filepath=/traefik/logs/access.log'
       - '--accesslog.format=json'
       - '--accesslog.bufferingsize=100'
+      - '--accesslog.fields.headers.defaultmode=drop'
+      - '--accesslog.fields.headers.names.User-Agent=keep'
 ```
 
 ![Coolify](public/coolify.png)
+
+2. Configure a volume storage to share the access log file with the container :
+
+**Source path** : `/data/coolify/proxy/logs`
+
+**Destination path** : `/app/logs`
 
 ## Credits
 

@@ -18,7 +18,6 @@ export const columnSchema = z.object({
   date: z.date(),
   headers: z.record(z.string()),
   message: z.string().optional(),
-  percentile: z.number().optional(),
 });
 
 export type ColumnSchema = z.infer<typeof columnSchema>;

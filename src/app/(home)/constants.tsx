@@ -13,10 +13,8 @@ import { LEVELS } from "@/constants/levels";
 import { getLevelColor, getLevelLabel } from "@/lib/request/level";
 import { format } from "date-fns";
 import { formatMilliseconds } from "@/lib/format";
-import { SheetTimingPhases } from "./_components/sheet-timing-phases";
 import { TabsObjectView } from "./_components/tabs-object-view";
 import CopyToClipboardContainer from "@/components/custom/copy-to-clipboard-container";
-import { PopoverPercentile } from "./_components/popover-percentile";
 import type { LogsMeta } from "./query-options";
 
 // instead of filterFields, maybe just 'fields' with a filterDisabled prop?
@@ -166,22 +164,6 @@ export const sheetFields = [
       </>
     ),
     skeletonClassName: "w-16",
-  },
-  {
-    id: "percentile",
-    label: "Percentile",
-    type: "readonly",
-    component: (props) => {
-      return (
-        <PopoverPercentile
-          data={props}
-          percentiles={props.metadata?.currentPercentiles}
-          filterRows={props.metadata?.filterRows as number}
-          className="ml-auto"
-        />
-      );
-    },
-    skeletonClassName: "w-12",
   },
   {
     id: "headers",
