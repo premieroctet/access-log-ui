@@ -5,11 +5,9 @@ import {
   filterData,
   getFacetsFromData,
   groupChartData,
-  percentileData,
   sliderFilterValues,
   sortData,
 } from "../helpers";
-import { calculateSpecificPercentile } from "@/lib/request/percentile";
 import { addDays } from "date-fns";
 import type { InfiniteQueryMeta, LogsMeta } from "../../query-options";
 import { ColumnSchema } from "../../schema";

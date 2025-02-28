@@ -1,26 +1,15 @@
 "use client";
 
-import type { ColumnDef } from "@tanstack/react-table";
-import { Minus } from "lucide-react";
-import type { ColumnSchema } from "./schema";
-import { getStatusColor } from "@/lib/request/status-code";
-import {
-  getTimingColor,
-  getTimingLabel,
-  getTimingPercentage,
-  timingPhases,
-} from "@/lib/request/timing";
-import { cn } from "@/lib/utils";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { TextWithTooltip } from "@/components/custom/text-with-tooltip";
-import { HoverCardTimestamp } from "./_components/hover-card-timestamp";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { LEVELS } from "@/constants/levels";
 import { getLevelColor } from "@/lib/request/level";
+import { getStatusColor } from "@/lib/request/status-code";
+import { cn } from "@/lib/utils";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Minus } from "lucide-react";
+import { HoverCardTimestamp } from "./_components/hover-card-timestamp";
+import type { ColumnSchema } from "./schema";
 
 export const columns: ColumnDef<ColumnSchema>[] = [
   {

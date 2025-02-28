@@ -7,10 +7,6 @@ import {
 import type { FacetMetadataSchema, ColumnSchema } from "../schema";
 import type { SearchParamsType } from "../search-params";
 import { isArrayOfDates, isArrayOfNumbers } from "@/lib/is-array";
-import {
-  calculatePercentile,
-  calculateSpecificPercentile,
-} from "@/lib/request/percentile";
 import { LEVELS } from "@/constants/levels";
 
 export const sliderFilterValues = [
@@ -75,14 +71,6 @@ export function sortData(data: ColumnSchema[], sort: SearchParamsType["sort"]) {
   });
 }
 
-export function percentileData(data: ColumnSchema[]): ColumnSchema[] {
-  const latencies = data.map((row) => row.latency);
-  return data.map((row) => ({
-    ...row,
-    percentile: calculatePercentile(latencies, row.latency),
-  }));
-}
-
 export function getFacetsFromData(data: ColumnSchema[]) {
   const valuesMap = data.reduce((prev, curr) => {
     Object.entries(curr).forEach(([key, value]) => {
@@ -121,18 +109,6 @@ export function getFacetsFromData(data: ColumnSchema[]) {
   );
 
   return facets satisfies Record<string, FacetMetadataSchema>;
-}
-
-export function getPercentileFromData(data: ColumnSchema[]) {
-  const latencies = data.map((row) => row.latency);
-
-  const p50 = calculateSpecificPercentile(latencies, 50);
-  const p75 = calculateSpecificPercentile(latencies, 75);
-  const p90 = calculateSpecificPercentile(latencies, 90);
-  const p95 = calculateSpecificPercentile(latencies, 95);
-  const p99 = calculateSpecificPercentile(latencies, 99);
-
-  return { p50, p75, p90, p95, p99 };
 }
 
 export function groupChartData(
