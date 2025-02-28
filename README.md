@@ -1,9 +1,15 @@
 # Access Log UI
 
-<p style="display: flex; align-items: center; justify-content: left;">
-  <img src="public/logos/AccessLogUI.svg" alt="Access Log UI Logo" width="70" style="margin-right: 20px;">
-  <span>A modern UI for viewing and analyzing access logs with powerful filtering and search capabilities.</span>
-</p>
+<table>
+  <tr>
+    <td>
+      <img src="public/logos/AccessLogUI.svg" alt="Access Log UI Logo" width="70" style="margin-right: 20px;">
+    </td>
+    <td>
+      <span>A modern UI for viewing and analyzing access logs with powerful filtering and search capabilities.</span>
+    </td>
+  </tr>
+</table>
 
 <p align="center">
   <img src="public/example.jpg" alt="Access Log UI Example" width="100%">
