@@ -1,5 +1,3 @@
-// {"ClientAddr":"192.168.156.1:31073","ClientHost":"192.168.156.1","ClientPort":"31073","ClientUsername":"-","DownstreamContentSize":75,"DownstreamStatus":404,"Duration":1964899,"OriginContentSize":75,"OriginDuration":1694568,"OriginStatus":404,"Overhead":270331,"RequestAddr":"nodejs.127.0.0.1.sslip.io","RequestContentSize":0,"RequestCount":1,"RequestHost":"nodejs.127.0.0.1.sslip.io","RequestMethod":"GET","RequestPath":"/500","RequestPort":"-","RequestProtocol":"HTTP/1.1","RequestScheme":"http","RetryAttempts":0,"RouterName":"http-0-p0o00o0g0cksskkog88so880@docker","ServiceAddr":"192.168.156.12:3000","ServiceName":"http-0-p0o00o0g0cksskkog88so880@docker","ServiceURL":"http://192.168.156.12:3000","StartLocal":"2025-02-28T12:11:34.10912886Z","StartUTC":"2025-02-28T12:11:34.10912886Z","entryPointName":"http","level":"info","msg":"","time":"2025-02-28T12:11:34Z"}
-
 import { v4 as uuidv4 } from "uuid";
 import { ColumnSchema } from "@/app/(home)/schema";
 
@@ -44,7 +42,7 @@ export interface RawLog {
  * @returns 'success', 'warning', or 'error'
  */
 function determineLevel(status: number): "success" | "warning" | "error" {
-  if (status >= 200 && status < 300) {
+  if (status >= 200 && status < 400) {
     return "success";
   } else if (status >= 400 && status < 500) {
     return "warning";
