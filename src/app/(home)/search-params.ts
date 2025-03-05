@@ -36,11 +36,6 @@ export const searchParamsParser = {
   // CUSTOM FILTERS
   level: parseAsArrayOf(parseAsStringLiteral(LEVELS), ARRAY_DELIMITER),
   latency: parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
-  "timing.dns": parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
-  "timing.connection": parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
-  "timing.tls": parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
-  "timing.ttfb": parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
-  "timing.transfer": parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
   status: parseAsArrayOf(parseAsInteger, SLIDER_DELIMITER),
   method: parseAsArrayOf(parseAsStringLiteral(METHODS), ARRAY_DELIMITER),
   host: parseAsString,
